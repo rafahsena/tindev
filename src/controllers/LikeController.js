@@ -15,8 +15,8 @@ module.exports = {
     }
 
     if(targetDev.likes.includes(loggedDev.id)) {
-      const loggedSocket = req.connectedUsers[loggedUser];
-      const targetSocket = req.connectedUsers[targetUser];
+      const loggedSocket = req.connectedUsers[loggedDev];
+      const targetSocket = req.connectedUsers[targetDev];
       if(loggedSocket) {
         req.io.to(loggedSocket).emit('match', targetDev);
       }
