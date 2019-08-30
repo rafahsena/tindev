@@ -8,16 +8,22 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+const connectedUsers = {};
 
 io.on('connection', socket => {
-  socket.on('hello', message => {
-    console.log(message);
-  })
-  console.log("Nova conexão ", socket.id);
+  const { user } = socket.handshake.query;
+  connectedUsers[user] = socket.id;
 });
 
 mongoose.connect('mongodb+srv://rafahsena:senha@cluster0-f8oqu.mongodb.net/test?retryWrites=true&w=majority', { 
   useNewUrlParser: true 
+});
+
+app.use((req, res, next) => {
+  req.io = io;
+  req.connectedUsers = connectedUsers;
+
+  return next();
 });
 
 app.use(express.json());
