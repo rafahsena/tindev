@@ -14,7 +14,7 @@ module.exports = {
       return res.status(400).json({ error: 'Dev not exists' });
     }
 
-    if(targetDev.likes.includes(loggedDev)) {
+    if(targetDev.likes.includes(loggedDev.id)) {
       const loggedSocket = req.connectedUsers[loggedUser];
       const targetSocket = req.connectedUsers[targetUser];
       if(loggedSocket) {
@@ -24,10 +24,6 @@ module.exports = {
         req.io.to(targetSocket).emit('match', loggedDev);
       }
     }
-
-
-    if(targetDev.likes.includes(loggedDev.id))
-      console.log("Deu Match");
 
     loggedDev.likes.push(targetDev.id);
     await loggedDev.save();
