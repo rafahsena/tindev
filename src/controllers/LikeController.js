@@ -15,6 +15,7 @@ module.exports = {
     }
 
     if(targetDev.likes.includes(loggedDev.id)) {
+      console.log("Deu match");
       const loggedSocket = req.connectedUsers[loggedDev];
       const targetSocket = req.connectedUsers[targetDev];
       if(loggedSocket) {
